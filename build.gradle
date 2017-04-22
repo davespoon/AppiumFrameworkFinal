@@ -1,0 +1,22 @@
+group 'com.grin'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'io.appium', name: 'java-client', version: '3.4.0'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Runner'
+    }
+}

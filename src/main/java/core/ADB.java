@@ -1,5 +1,6 @@
 package core;
 
+import api.android.Android;
 import core.managers.ServerManager;
 import org.junit.Test;
 
@@ -10,15 +11,18 @@ public class ADB {
 
     private String ID;
 
-    /*public ADB(String deviceID) {
+    public ADB(String deviceID) {
         ID = deviceID;
-    }*/
+    }
 
     public static String command(String command) {
+        MyLogger.log.debug("Formating ADB Command: " + command);
         if (command.startsWith("adb")) command.replace("adb", ServerManager.getAndroidHome() +
                 "/platform-tools/adb ");
         else throw new RuntimeException("This method is designed to run ADB commands only");
+        MyLogger.log.debug("Formatted ADB Command: " + command);
         String output = ServerManager.runCommand(command);
+        MyLogger.log.debug("Output of the ADB Command: " + output);
         if (output == null) return "";
         else return output.trim();
     }

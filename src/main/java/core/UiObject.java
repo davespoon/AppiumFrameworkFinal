@@ -140,7 +140,7 @@ public class UiObject {
         return this;
     }
 
-    public UiObject tap(String value) {
+    public UiObject tap() {
         if (isXpath()) Android.driver.findElementByXPath(locator).click();
         else Android.driver.findElementByAndroidUIAutomator(locator).click();
         return this;

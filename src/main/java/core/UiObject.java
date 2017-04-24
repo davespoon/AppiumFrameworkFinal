@@ -1,18 +1,17 @@
 package core;
 
 import api.android.Android;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
-
-import java.util.NoSuchElementException;
 
 public class UiObject {
 
     private String locator;
 
-    public UiObject(String locator) {
+    UiObject(String locator) {
         this.locator = locator;
-        System.out.println(this.locator);
+        MyLogger.log.debug("Created new UiObject: " + this.locator);
     }
 
     private boolean isXpath() {
@@ -25,7 +24,7 @@ public class UiObject {
             if (isXpath()) element = Android.driver.findElementByXPath(locator);
             else element = Android.driver.findElementByAndroidUIAutomator(locator);
             return element.isDisplayed();
-        } catch (NoSuchElementException ex) {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
@@ -147,17 +146,16 @@ public class UiObject {
     }
 
     public UiObject scrollTo() {
-        if (!locator.contains("text"))
-            throw new RuntimeException("Scroll to method can only be used with text attributes " +
-                    "and current locator : " + locator + "does not containg any text attributes");
+        if (!locator.contains("text")) throw new RuntimeException("Scroll to method can only be used with text " +
+                "attributes and current locator: " + locator + " does not contain any text attributes!");
         if (isXpath()) Android.driver.scrollTo(locator.substring(locator.indexOf("@text=\""), locator.indexOf("\"]")).
-                replace("@text\"", ""));
+                replace("@text=\"", ""));
         else {
             String text;
-            if (locator.contains("textContains")) text = locator.substring(locator.indexOf(".textContains(\""),
-                    locator.indexOf("\")")).replace(".textContains(\"", "");
-            else text = locator.substring(locator.indexOf("text(\""), locator.indexOf("\")")).
-                    replace("text(\"", "");
+            if (locator.contains("textContains")) text = locator.substring(locator.indexOf(".textContains(\""), locator.
+                    indexOf("\")")).replace(".textContains(\"", "");
+            else text = locator.substring(locator.indexOf(".text(\""), locator.indexOf("\")")).
+                    replace(".text(\"", "");
             Android.driver.scrollTo(text);
         }
         return this;
@@ -167,9 +165,8 @@ public class UiObject {
         Timer timer = new Timer();
         timer.start();
         while (!timer.expired(seconds)) if (exists()) break;
-        if (timer.expired(seconds) && !exists())
-            throw new AssertionError("Element " + locator + " failed to appear within " +
-                    seconds + " seconds");
+        if (timer.expired(seconds) && !exists()) throw new AssertionError(
+                "Element " + locator + " failed to appear within " + seconds + " seconds");
         return this;
     }
 
@@ -177,10 +174,8 @@ public class UiObject {
         Timer timer = new Timer();
         timer.start();
         while (!timer.expired(seconds)) if (!exists()) break;
-        if (timer.expired(seconds) && exists())
-            throw new AssertionError("Element " + locator + " failed to disappear within " +
-                    seconds + " seconds");
+        if (timer.expired(seconds) && exists()) throw new AssertionError(
+                "Element " + locator + " failed to disappear within " + seconds + " seconds");
         return this;
     }
-
 }

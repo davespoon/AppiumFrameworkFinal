@@ -1,4 +1,3 @@
-
 import api.android.Android;
 import core.ADB;
 import core.MyLogger;
@@ -12,6 +11,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * Created by Artur on 3/23/2016.
+ */
 public class Runner {
     static String appPath = "C:\\Users\\admin\\AppData\\Local\\Programs\\appium-desktop\\resources\\app\\" +
             "node_modules\\appium\\node_modules\\appium-unlock\\bin\\unlock_apk-debug.apk";
@@ -25,27 +27,35 @@ public class Runner {
             capabilities.setCapability("platformName", "Android");
             capabilities.setCapability("app", appPath);
             driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
-
             Android.driver = driver;
-
             ADB adb = new ADB("4df182e438a98f79");
-            adb.openAppsActivity("org.zwanoo.android.speedtest",
-                    "com.ookla.speedtest.softfacade.MainActivity");
+            adb.openAppsActivity("com.sec.android.app.popupcalculator",
+                    "com.sec.android.app.popupcalculator.Calculator");
 
-            //UiObject testAgainButton = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/o2_button_button").makeUiObject();
+            /*UiObject testAgainButton = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/o2_button_button").makeUiObject();
             UiObject ping = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/pingSpeed").makeUiObject();
             UiObject download = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/downloadSpeed").makeUiObject();
-            UiObject upload = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/uploadSpeed").makeUiObject();
+            UiObject upload = new UiSelector().resourceId("org.zwanoo.android.speedtest:id/uploadSpeed").makeUiObject();*/
 
-            //testAgainButton.waitToAppear(5).tap().waitToDisappear(5).waitToAppear(120);
+            /*testAgainButton.waitToAppear(5).tap().waitToDisappear(5).waitToAppear(120);
 
             MyLogger.log.info("Ping: " + ping.getText());
             MyLogger.log.info("Download: " + download.getText());
-            MyLogger.log.info("Upload: " + upload.getText());
+            MyLogger.log.info("Upload: " + upload.getText());*/
+
+            UiObject label = new UiSelector().resourceId("android:id/action_bar_title").makeUiObject();
+
+            MyLogger.log.info("Label: " + label.getText());
 
 
         } finally {
             if (driver == null) driver.quit();
         }
     }
+
+   /* @Test
+    public void test() {
+        ADB adb = new ADB("4df182e438a98f79");
+        System.out.println(adb.getForegroundActivity());
+    }*/
 }

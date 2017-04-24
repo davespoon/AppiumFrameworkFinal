@@ -45,7 +45,7 @@ public class ADB {
         return devices;
     }
 
-    public String getForegroudActivity() {
+    public String getForegroundActivity() {
         return command("adb -s " + ID + " shell dumpsys window windows | grep mCurrentFocus");
     }
 

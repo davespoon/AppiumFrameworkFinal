@@ -19,7 +19,7 @@ public class Runner {
             "node_modules\\appium\\node_modules\\appium-unlock\\bin\\unlock_apk-debug.apk";
 
     public static void main(String[] args) throws MalformedURLException, InterruptedException {
-        MyLogger.log.setLevel(Level.DEBUG);
+        MyLogger.log.setLevel(Level.INFO);
         AndroidDriver driver = null;
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();

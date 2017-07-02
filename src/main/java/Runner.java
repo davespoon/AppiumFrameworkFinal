@@ -11,24 +11,20 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Artur on 3/23/2016.
- */
 public class Runner {
-    static String appPath = "C:\\Users\\admin\\AppData\\Local\\Programs\\appium-desktop\\resources\\app\\" +
-            "node_modules\\appium\\node_modules\\appium-unlock\\bin\\unlock_apk-debug.apk";
+    static String appPath = "D:\\Appium\\unlock_apk-debug.apk";
 
     public static void main(String[] args) throws MalformedURLException, InterruptedException {
         MyLogger.log.setLevel(Level.INFO);
         AndroidDriver driver = null;
         try {
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("deviceName", "4df182e438a98f79");
+            capabilities.setCapability("deviceName", "6cb79487");
             capabilities.setCapability("platformName", "Android");
             capabilities.setCapability("app", appPath);
             driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
             Android.driver = driver;
-            ADB adb = new ADB("4df182e438a98f79");
+            ADB adb = new ADB("6cb79487");
             adb.openAppsActivity("org.zwanoo.android.speedtest",
                     "com.ookla.speedtest.softfacade.MainActivity");
 
